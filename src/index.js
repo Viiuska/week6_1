@@ -111,7 +111,7 @@ const buildChart = async (check, kunta) => {
         break;
       }
     }
-  } else {
+   } if(check === "false") {
     charData = {
       labels: years,
       datasets: [{ values: luku.reverse() }]
