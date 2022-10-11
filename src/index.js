@@ -73,9 +73,8 @@ const getData = async () => {
 const getDataCode = async () => {
   const url =
     "https://statfin.stat.fi/PxWeb/api/v1/en/StatFin/synt/statfin_synt_pxt_12dy.px";
-
   const res = await fetch(url, {
-    method: "Get"
+    method: "GET"
   });
   if (!res.ok) {
     return;
@@ -86,12 +85,19 @@ const getDataCode = async () => {
 
 const buildChart = async (check, kunta) => {
   const data = await getData();
+  const dataCode = await getDataCode();
   let charData = {};
   const years = Object.values(data.dimension.Vuosi.category.label);
   const luku = data.value;
 
+  if (check === "false") {
+    charData = {
+      labels: years,
+      datasets: [{ values: luku.reverse() }]
+    };
+  }
+
   if (check === "true") {
-    const dataCode = await getDataCode();
     let muniCode = Object.values(dataCode.variables[1]);
     let infoCode = muniCode[2]; //antaa koodi jono, infoCode[2] paikka
 
@@ -111,15 +117,10 @@ const buildChart = async (check, kunta) => {
         break;
       }
     }
-   } if(check === "false") {
-    charData = {
-      labels: years,
-      datasets: [{ values: luku.reverse() }]
-    };
   }
 
   const chart = new Chart("#chart", {
-    title: "My Chart",
+    title: "Finnish municipalities",
     data: charData,
     type: "line",
     colors: ["#eb5146"],
