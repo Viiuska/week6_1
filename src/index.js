@@ -87,15 +87,15 @@ const buildChart = async (check, kunta) => {
   const data = await getData();
   const dataCode = await getDataCode();
   let charData = {};
+
   const years = Object.values(data.dimension.Vuosi.category.label);
+  const alue = Object.values(data.dimension.Alue);
   const luku = data.value;
 
-  if (check === "false") {
-    charData = {
-      labels: years,
-      datasets: [{ values: luku.reverse() }]
-    };
-  }
+  charData = {
+    labels: years,
+    datasets: [{ name: Object.keys(alue[1].index)[0], values: luku.reverse() }]
+  };
 
   if (check === "true") {
     let muniCode = Object.values(dataCode.variables[1]);
@@ -112,7 +112,7 @@ const buildChart = async (check, kunta) => {
         const alue = infoCode[i];
         charData = {
           labels: years,
-          datasets: [{ values: luku.reverse() }, { name: alue }]
+          datasets: [{ name: alue, values: luku.reverse() }]
         };
         break;
       }
@@ -124,7 +124,7 @@ const buildChart = async (check, kunta) => {
     data: charData,
     type: "line",
     colors: ["#eb5146"],
-    height: 450
+    high: 450
   });
 };
 
