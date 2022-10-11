@@ -94,7 +94,7 @@ const buildChart = async (check, kunta) => {
 
   charData = {
     labels: years,
-    datasets: [{ name: Object.keys(alue[1].index)[0], values: luku.reverse() }]
+    datasets: [{ name: Object.keys(alue[1].index)[0], values: luku }]
   };
 
   if (check === "true") {
@@ -112,7 +112,7 @@ const buildChart = async (check, kunta) => {
         const alue = infoCode[i];
         charData = {
           labels: years,
-          datasets: [{ name: alue, values: luku.reverse() }]
+          datasets: [{ name: alue, values: luku }]
         };
         break;
       }
