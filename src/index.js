@@ -70,34 +70,29 @@ const getData = async () => {
   return data;
 };
 
-const getDataCode = async () => {
-  const url =
-    "https://statfin.stat.fi/PxWeb/api/v1/en/StatFin/synt/statfin_synt_pxt_12dy.px";
-  const res = await fetch(url, {
-    method: "GET"
-  });
-  if (!res.ok) {
-    return;
-  }
-  const dataCode = await res.json();
-  return dataCode;
-};
-
 const buildChart = async (check, kunta) => {
-  const data = await getData();
-  const dataCode = await getDataCode();
   let charData = {};
+  const data = await getData();
 
   const years = Object.values(data.dimension.Vuosi.category.label);
   const alue = Object.values(data.dimension.Alue);
   const luku = data.value;
 
-  charData = {
-    labels: years,
-    datasets: [{ name: Object.keys(alue[1].index)[0], values: luku }]
-  };
+  if (check === "false") {
+    charData = {
+      labels: years,
+      datasets: [{ name: Object.keys(alue[1].index)[0], values: luku }]
+    };
+  }
 
   if (check === "true") {
+    const url =
+      "https://statfin.stat.fi/PxWeb/api/v1/en/StatFin/synt/statfin_synt_pxt_12dy.px";
+    const res = await fetch(url, {
+      method: "GET"
+    });
+    const dataCode = await res.json();
+
     let muniCode = Object.values(dataCode.variables[1]);
     let infoCode = muniCode[2]; //antaa koodi jono, infoCode[2] paikka
 
@@ -109,10 +104,14 @@ const buildChart = async (check, kunta) => {
       if (kunta.toLowerCase() !== infoName[n].toLowerCase()) {
         i++;
       } else {
-        const alue = infoCode[i];
+        const aluecode = infoCode[i];
+        query.query[1].selection.values[0] = aluecode;
+
+        const data = await getData();
+        const luku = data.value;
         charData = {
           labels: years,
-          datasets: [{ name: alue, values: luku }]
+          datasets: [{ name: aluecode, values: luku }]
         };
         break;
       }
