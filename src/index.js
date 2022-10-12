@@ -72,13 +72,13 @@ const getData = async () => {
 
 const buildChart = async (check, kunta) => {
   let charData = {};
-  const data = await getData();
-
-  const years = Object.values(data.dimension.Vuosi.category.label);
-  const alue = Object.values(data.dimension.Alue);
-  const luku = data.value;
-
   if (check === "false") {
+    const data = await getData();
+
+    let years = Object.values(data.dimension.Vuosi.category.label);
+    const alue = Object.values(data.dimension.Alue);
+    const luku = data.value;
+
     charData = {
       labels: years,
       datasets: [{ name: Object.keys(alue[1].index)[0], values: luku }]
@@ -92,6 +92,8 @@ const buildChart = async (check, kunta) => {
       method: "GET"
     });
     const dataCode = await res.json();
+    const dataC = await getData();
+    let years = Object.values(dataC.dimension.Vuosi.category.label);
 
     let muniCode = Object.values(dataCode.variables[1]);
     let infoCode = muniCode[2]; //antaa koodi jono, infoCode[2] paikka
