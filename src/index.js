@@ -130,11 +130,11 @@ const buildChart = async (check, kunta) => {
 };
 
 let clicked = "false";
-let kunta = "";
+let kunta = "Whole country";
 
 const submitBtn = document.getElementById("submit-data");
 //discussion with Kirveskoski
-submitBtn.addEventListener("click", function(event){
+submitBtn.addEventListener("click", function (event) {
   kunta = document.getElementById("input-area").value;
   clicked = "true";
   buildChart(clicked, kunta);
