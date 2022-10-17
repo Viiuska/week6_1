@@ -136,8 +136,9 @@ buildChart(clicked, kunta);
 
 let submitBtn = document.getElementById("submit-data");
 //discussion with Kirveskoski
-submitBtn.addEventListener("click", function () {
+submitBtn.addEventListener("click", function (event) {
   kunta = document.getElementById("input-area").value;
   clicked = "true";
   buildChart(clicked, kunta);
+  event.preventDefault();
 });
