@@ -81,7 +81,7 @@ const buildChart = async (check, kunta) => {
 
     charData = {
       labels: years,
-      datasets: [{ name: Object.keys(alue[1].index)[0], values: luku }]
+      datasets: [{values: luku }]
     };
   }
 
@@ -113,7 +113,7 @@ const buildChart = async (check, kunta) => {
         const luku = data.value;
         charData = {
           labels: years,
-          datasets: [{ name: aluecode, values: luku }]
+          datasets: [{values: luku }]
         };
         break;
       }
