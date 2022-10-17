@@ -132,8 +132,6 @@ const buildChart = async (check, kunta) => {
 let clicked = "false";
 let kunta = "";
 
-buildChart(clicked, kunta);
-
 let submitBtn = document.getElementById("submit-data");
 //discussion with Kirveskoski
 submitBtn.addEventListener("click", function (event) {
@@ -142,3 +140,5 @@ submitBtn.addEventListener("click", function (event) {
   clicked = "true";
   buildChart(clicked, kunta);
 });
+
+buildChart(clicked, kunta);
