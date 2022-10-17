@@ -132,13 +132,13 @@ const buildChart = async (check, kunta) => {
 let clicked = "false";
 let kunta = "";
 
-let submitBtn = document.getElementById("submit-data");
+const submitBtn = document.getElementById("submit-data");
 //discussion with Kirveskoski
-submitBtn.addEventListener("click", function (event) {
-  event.preventDefault();
+submitBtn.addEventListener("click", function(event){
   kunta = document.getElementById("input-area").value;
   clicked = "true";
   buildChart(clicked, kunta);
+  event.preventDefault();
 });
 
 buildChart(clicked, kunta);
